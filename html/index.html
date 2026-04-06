@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运维实战项目</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #999;
+            margin-bottom: 30px;
+        }
+        
+        .service-list {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .service-item:last-child {
+            border-bottom: none;
+        }
+        
+        .service-name {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .service-status {
+            color: #4caf50;
+        }
+        
+        .links {
+            margin: 30px 0;
+        }
+        
+        a {
+            display: inline-block;
+            margin: 10px 10px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        
+        a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        
+        .info-box p {
+            margin: 5px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 云原生运维实战</h1>
+        <p class="subtitle">基于 Docker Compose 的多容器编排项目</p>
+        
+        <div class="service-list">
+            <div class="service-item">
+                <span class="service-name">📱 前端 (Nginx)</span>
+                <span class="service-status">✓ 运行中</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">⚙️ 后端 API (Go)</span>
+                <span class="service-status">✓ 运行中</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">🗄️ 数据库 (MySQL)</span>
+                <span class="service-status">✓ 运行中</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">💾 缓存 (Redis)</span>
+                <span class="service-status">✓ 运行中</span>
+            </div>
+        </div>
+        
+        <div class="links">
+            <a href="http://localhost:8080/">🔗 API 主页</a>
+            <a href="http://localhost:8080/health">💓 健康检查</a>
+            <a href="http://localhost:8080/metrics">📊 Prometheus 指标</a>
+            <a href="http://localhost:8080/config">⚙️ 配置信息</a>
+        </div>
+        
+        <div class="info-box">
+            <p><strong>项目架构:</strong></p>
+            <p>• 前端通过 Nginx (端口 80) 提供</p>
+            <p>• 后端 API 运行在 Go (端口 8080)</p>
+            <p>• MySQL 数据库 (端口 3306)</p>
+            <p>• Redis 缓存 (端口 6379)</p>
+            <p>• 所有服务通过 mynetwork 网络通信</p>
+        </div>
+        
+        <div class="info-box" style="background: #fff3e0; border-left-color: #ff9800;">
+            <p><strong>📚 学习要点:</strong></p>
+            <p>✓ 理解 Docker Compose 多容器编排</p>
+            <p>✓ 掌握容器间网络通信</p>
+            <p>✓ 学习环境变量配置管理</p>
+            <p>✓ 体验现代应用架构</p>
+        </div>
+    </div>
+</body>
+</html>
