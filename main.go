@@ -48,6 +48,8 @@ type Product struct {
 	Price int    `json:"price"`
 	Stock int    `json:"stock"`
 }
+type ce struct {
+}
 
 // 初始化数据库
 func initDB() {
