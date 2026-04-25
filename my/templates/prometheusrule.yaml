@@ -1,0 +1,71 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "my.fullname" . }}-alerts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "my.labels" . | nindent 4 }}
+spec:
+  groups:
+  - name: {{ include "my.fullname" . }}.rules
+    interval: 30s
+    rules:
+    # 1. 应用无响应告警（关键）
+    - alert: AppDown
+      expr: up{job="{{ include "my.fullname" . }}"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "应用 {{ $labels.job }} 无响应"
+        description: "应用已离线超过1分钟，请立即检查"
+    
+    # 2. 健康检查失败告警
+    - alert: HealthCheckFailed
+      expr: http_requests_total{path="/health", status=~"5.."} > 0
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "健康检查失败"
+        description: "应用健康检查端点返回错误"
+    
+    # 3. 高错误率告警（关键）
+    - alert: HighErrorRate
+      expr: rate(http_requests_total{job="{{ include "my.fullname" . }}", status=~"5.."}[5m]) > 0.05
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "应用 {{ $labels.job }} 错误率高"
+        description: "过去5分钟5xx错误率超过5%，当前值: {{ $value | humanizePercentage }}"
+    
+    # 4. 高请求延迟告警（警告）
+    - alert: HighLatency
+      expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="{{ include "my.fullname" . }}"}[5m])) > 1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "应用响应时间过长"
+        description: "P95延迟超过1秒，当前值: {{ $value | humanizeDuration }}"
+    
+    # 5. Pod 重启过频繁告警
+    - alert: PodRestartingTooOften
+      expr: rate(kube_pod_container_status_restarts_total{pod=~"{{ include "my.fullname" . }}.*"}[15m]) > 0.1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Pod 重启过频繁"
+        description: "Pod {{ $labels.pod }} 15分钟内重启超过6次，请检查日志"
+    
+    # 6. 内存使用率高告警
+    - alert: HighMemoryUsage
+      expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.9
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "节点内存使用率过高"
+        description: "内存使用率: {{ $value | humanizePercentage }}"
